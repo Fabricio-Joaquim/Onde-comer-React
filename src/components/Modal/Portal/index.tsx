@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 
 const PortalModal = ({ children }:Element) => {
-  const portal = document.getElementById('modal-root') as Element;
+  const portal:any = document.getElementById('modal-root');
   return ReactDOM.createPortal(children, portal);
 };
 

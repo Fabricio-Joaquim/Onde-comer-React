@@ -3,12 +3,15 @@ import * as Component from './styles'
 import logo from '../assents/Logo.png'
 import Slider from 'react-slick'
 import Img from '../assents/restaurante-fake.png'
+import Modal from '../components/Modal'
 interface Props {
     
 }
 import Card from '../components/ImageCard'
 import RestaurantCard from '../components/RestaurantCard'
+import Maps from '../components/Maps'
 export const Home = (props: Props) => {
+    const [ModalOpen, setModalOpen] = useState(false)
     const [Pesquisa, setPesquisa] = useState<string>('')
     const settings = {
         dots: false,
@@ -62,8 +65,8 @@ export const Home = (props: Props) => {
                 </Component.Carousel>
                 <RestaurantCard></RestaurantCard>
             </Component.Container>
-
-
+            <Maps/>
+        <Modal open={ModalOpen} children={undefined} onClose={()=>{setModalOpen(!ModalOpen)}}></Modal>
         </Component.wrapper>
     )
 }

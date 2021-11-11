@@ -1,18 +1,34 @@
-import React, { useState } from 'react';
-import {GoogleApiWrapper, Map, Marker} from 'google-maps-react'
-import { Console } from 'console';
+    import React, { useState } from 'react';
+    import {GoogleApiWrapper, Map, Marker} from 'google-maps-react'
+
 const data = process.env.REACT_APP_GOOGLE_API_KEY?process.env.REACT_APP_GOOGLE_API_KEY:''
 
-const Maps: React.FC = (props:any) => {
+const Maps = (props:{google:any,query:string}) => {
 
-    const {google} = props
-    const [App, setApp] = useState()
+    const {google,query} = props
+    const [App, setApp] = useState<any>({})
+
+function serachByQuery(query:any){
+    const service = new google.maps.places.PlacesService(App);
+    const request = {
+        location: App.center,
+        radius:'20000',
+        type:['restaurant'],
+        query
+    }
+    service.textSearch(request,(results:any,status:any) =>{
+        if(status === google.maps.places.PlacesService.OK)
+        {console.log('2323ewqd',query)}
+    })
+
+}
+
     function search(App:any,center:any){
         const service = new google.maps.places.PlacesService(App);
         const request = {
             location: center,
             radius:'20000',
-            type:['restaurant']
+            type:['restaurant'],
         }
         service.nearbySearch(request,(results:any,status:any) =>{
             if(status === google.maps.places.PlacesService.OK)
@@ -33,7 +49,6 @@ const Maps: React.FC = (props:any) => {
   
 }
 
-console.log(data)
 export default GoogleApiWrapper({
     apiKey:data,
     language:'pt-br'

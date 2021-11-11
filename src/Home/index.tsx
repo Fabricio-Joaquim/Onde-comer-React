@@ -11,8 +11,14 @@ import Card from '../components/ImageCard'
 import RestaurantCard from '../components/RestaurantCard'
 import Maps from '../components/Maps'
 export const Home = (props: Props) => {
+    
+    const [Query, setQuery] = useState<string>('')
     const [ModalOpen, setModalOpen] = useState(false)
     const [Pesquisa, setPesquisa] = useState<string>('')
+    
+    function handle(event:any){
+        event.key==='Enter'?setQuery(Pesquisa):null
+    }
     const settings = {
         dots: false,
         infinite: true,
@@ -31,7 +37,9 @@ export const Home = (props: Props) => {
                 <Component.Input
                     type='text'
                     placeholder='Digitar Restautante'
-                    value={Pesquisa} onChange={event=>setPesquisa(event.target.value)}
+                    value={Pesquisa} 
+                    onKeyPress={handle}
+                    onChange={event=>setPesquisa(event.target.value)}
                 />
                 <Component.h2>Na sua Área</Component.h2> 
                 <Component.Carousel {...settings}>
@@ -65,7 +73,7 @@ export const Home = (props: Props) => {
                 </Component.Carousel>
                 <RestaurantCard></RestaurantCard>
             </Component.Container>
-            <Maps/>
+            <Maps query={Query}/>
         <Modal open={ModalOpen} children={undefined} onClose={()=>{setModalOpen(!ModalOpen)}}></Modal>
         </Component.wrapper>
     )
